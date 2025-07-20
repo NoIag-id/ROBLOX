@@ -4,8 +4,9 @@ local TweenService = game:GetService("TweenService")
 -- Main GUI Elements
 local ScreenGui = Instance.new("ScreenGui")
 local Frame = Instance.new("Frame")
-local Logo = Instance.new("ImageLabel")
 local SmileyLabel = Instance.new("TextLabel")
+local Logo = Instance.new("ImageLabel")
+local BrandLabel = Instance.new("TextLabel")
 local MessageLabel = Instance.new("TextLabel")
 
 -- Attach GUI to CoreGui
@@ -16,18 +17,18 @@ ScreenGui.Parent = game.CoreGui
 Frame.Name = "MainFrame"
 Frame.Parent = ScreenGui
 Frame.AnchorPoint = Vector2.new(0.5, 0.5)
-Frame.Position = UDim2.new(0.5, 0, 0.5, 0) -- Center of screen
-Frame.Size = UDim2.new(0, 420, 0, 260)
+Frame.Position = UDim2.new(0.5, 0, 0.5, 0)
+Frame.Size = UDim2.new(0, 420, 0, 280)
 Frame.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
 Frame.BorderSizePixel = 0
 Frame.Active = true
 Frame.Draggable = true
 
--- Smiley Face Label
+-- Smiley Face Label (Animated)
 SmileyLabel.Name = "Smiley"
 SmileyLabel.Parent = Frame
 SmileyLabel.BackgroundTransparency = 1
-SmileyLabel.Position = UDim2.new(0.5, -25, 0, 8)
+SmileyLabel.Position = UDim2.new(0.5, -25, 0, 5)
 SmileyLabel.Size = UDim2.new(0, 50, 0, 30)
 SmileyLabel.Font = Enum.Font.SourceSansBold
 SmileyLabel.Text = "😊"
@@ -50,31 +51,32 @@ local function pulseEmoji()
 end
 task.spawn(pulseEmoji)
 
--- RD-Style Logo
+-- Marvel Avengers Logo
 Logo.Name = "Logo"
 Logo.Parent = Frame
 Logo.BackgroundTransparency = 1
-Logo.Position = UDim2.new(0.5, -45, 0, 50)
-Logo.Size = UDim2.new(0, 90, 0, 90)
-Logo.Image = "rbxassetid://13413215459" -- RD-style round logo (change if needed)
-Logo.ImageColor3 = Color3.fromRGB(255, 0, 0) -- Red tint
-Logo.ScaleType = Enum.ScaleType.Fit
-Logo.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-Logo.BorderSizePixel = 0
-Logo.ClipsDescendants = true
-Logo.ZIndex = 2
+Logo.Position = UDim2.new(0.5, -110, 0, 50)
+Logo.Size = UDim2.new(0, 60, 0, 60)
+Logo.Image = "rbxassetid://7268802369" -- Marvel Avengers Logo
 
--- Make the logo round
-local UICorner = Instance.new("UICorner")
-UICorner.CornerRadius = UDim.new(1, 0)
-UICorner.Parent = Logo
+-- "RD SCRIPTS" Text Beside Logo
+BrandLabel.Name = "Brand"
+BrandLabel.Parent = Frame
+BrandLabel.BackgroundTransparency = 1
+BrandLabel.Position = UDim2.new(0.5, -40, 0, 60)
+BrandLabel.Size = UDim2.new(0, 200, 0, 40)
+BrandLabel.Font = Enum.Font.SourceSansBold
+BrandLabel.Text = "RD SCRIPTS"
+BrandLabel.TextColor3 = Color3.fromRGB(255, 0, 0)
+BrandLabel.TextSize = 28
+BrandLabel.TextXAlignment = Enum.TextXAlignment.Left
 
 -- Message Label
 MessageLabel.Name = "Message"
 MessageLabel.Parent = Frame
 MessageLabel.BackgroundTransparency = 1
-MessageLabel.Position = UDim2.new(0.5, -180, 0, 160)
-MessageLabel.Size = UDim2.new(0, 360, 0, 80)
+MessageLabel.Position = UDim2.new(0.5, -180, 0, 140)
+MessageLabel.Size = UDim2.new(0, 360, 0, 100)
 MessageLabel.Font = Enum.Font.SourceSansBold
 MessageLabel.Text = "Currently not working on Delta.\nUse KRNL, or turn off your Anti Scam button on Delta."
 MessageLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -82,4 +84,3 @@ MessageLabel.TextSize = 18
 MessageLabel.TextWrapped = true
 MessageLabel.TextXAlignment = Enum.TextXAlignment.Center
 MessageLabel.TextYAlignment = Enum.TextYAlignment.Top
-
