@@ -1,94 +1,172 @@
--- Services
-local TweenService = game:GetService("TweenService")
+-- SERVICES
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
 
--- GUI Elements
-local ScreenGui = Instance.new("ScreenGui")
-local Frame = Instance.new("Frame")
-local Emoji1 = Instance.new("TextLabel")
-local Emoji2 = Instance.new("TextLabel")
-local Emoji3 = Instance.new("TextLabel")
-local Logo = Instance.new("ImageLabel")
-local BrandLabel = Instance.new("TextLabel")
-local MessageLabel = Instance.new("TextLabel")
+-- UI SETUP
+local screenGui = Instance.new("ScreenGui", player:WaitForChild("PlayerGui"))
+screenGui.Name = "RD_MutationUI"
 
--- Setup ScreenGui
-ScreenGui.Name = "WarningMessage"
-ScreenGui.Parent = game.CoreGui
+local mainFrame = Instance.new("Frame", screenGui)
+mainFrame.Size = UDim2.new(0, 280, 0, 200)
+mainFrame.Position = UDim2.new(0.5, -140, 0.5, -100)
+mainFrame.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
+mainFrame.BorderSizePixel = 0
+mainFrame.Active = true
+mainFrame.Draggable = true
 
--- Frame
-Frame.Name = "MainFrame"
-Frame.Parent = ScreenGui
-Frame.AnchorPoint = Vector2.new(0.5, 0.5)
-Frame.Position = UDim2.new(0.5, 0, 0.5, 0)
-Frame.Size = UDim2.new(0, 460, 0, 320)
-Frame.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
-Frame.BorderSizePixel = 0
-Frame.Active = true
-Frame.Draggable = true
+-- BRICK BACKGROUND TEXTURE
+local tex = Instance.new("ImageLabel", mainFrame)
+tex.Size = UDim2.new(1, 0, 1, 0)
+tex.Position = UDim2.new(0, 0, 0, 0)
+tex.Image = "rbxassetid://2712543070" -- Brick texture
+tex.ImageTransparency = 0.3
+tex.BackgroundTransparency = 1
+tex.ZIndex = 0
 
--- Function to create pulse animation
-local function createPulse(label)
-	local up = TweenService:Create(label, TweenInfo.new(0.5, Enum.EasingStyle.Sine), {TextSize = 34})
-	local down = TweenService:Create(label, TweenInfo.new(0.5, Enum.EasingStyle.Sine), {TextSize = 28})
-	task.spawn(function()
-		while label and label.Parent do
-			up:Play()
-			up.Completed:Wait()
-			down:Play()
-			down.Completed:Wait()
-		end
-	end)
+-- HEADER
+local header = Instance.new("TextLabel", mainFrame)
+header.Size = UDim2.new(1, 0, 0, 24)
+header.Position = UDim2.new(0, 0, 0, 0)
+header.BackgroundColor3 = Color3.fromRGB(0, 160, 0)
+header.Text = "Mutation Machine"
+header.Font = Enum.Font.FredokaOne
+header.TextSize = 18
+header.TextColor3 = Color3.new(1, 1, 1)
+header.TextStrokeTransparency = 0.5
+header.ZIndex = 2
+
+-- MINIMIZE / MAXIMIZE
+local minimize = Instance.new("TextButton", mainFrame)
+minimize.Text = "-"
+minimize.Size = UDim2.new(0, 24, 0, 24)
+minimize.Position = UDim2.new(1, -24, 0, 0)
+minimize.BackgroundColor3 = Color3.fromRGB(255, 80, 80)
+minimize.TextColor3 = Color3.new(1, 1, 1)
+minimize.Font = Enum.Font.SourceSansBold
+minimize.TextSize = 18
+minimize.ZIndex = 2
+
+local maximize = Instance.new("TextButton", screenGui)
+maximize.Text = "+"
+maximize.Size = UDim2.new(0, 40, 0, 40)
+maximize.Position = UDim2.new(0.5, -20, 0.5, -20)
+maximize.Visible = false
+maximize.BackgroundColor3 = Color3.fromRGB(80, 255, 80)
+maximize.TextColor3 = Color3.new(1, 1, 1)
+maximize.Font = Enum.Font.SourceSansBold
+maximize.TextSize = 24
+
+minimize.MouseButton1Click:Connect(function()
+	mainFrame.Visible = false
+	maximize.Visible = true
+end)
+maximize.MouseButton1Click:Connect(function()
+	mainFrame.Visible = true
+	maximize.Visible = false
+end)
+
+-- MESSAGE BOX
+local startupText = Instance.new("TextLabel", mainFrame)
+startupText.Size = UDim2.new(1, -20, 0, 80)
+startupText.Position = UDim2.new(0, 10, 0.2, 0)
+startupText.BackgroundTransparency = 1
+startupText.Text = "     !!!WELCOME TO RD SCRIPTS!!!\nThis script is currently working on KRNL\n         and any other executor\n             except from Delta"
+startupText.TextWrapped = true
+startupText.TextColor3 = Color3.new(1, 1, 1)
+startupText.TextStrokeTransparency = 0.4
+startupText.Font = Enum.Font.FredokaOne
+startupText.TextSize = 16
+startupText.ZIndex = 2
+
+-- WAITING COUNTDOWN
+local countdownText = Instance.new("TextLabel", mainFrame)
+countdownText.Size = UDim2.new(1, 0, 0, 20)
+countdownText.Position = UDim2.new(0, 0, 0.15, 0)
+countdownText.BackgroundTransparency = 1
+countdownText.Font = Enum.Font.FredokaOne
+countdownText.TextColor3 = Color3.fromRGB(255, 255, 0)
+countdownText.TextSize = 16
+countdownText.ZIndex = 2
+
+-- MAIN UI STUFF (INITIALLY HIDDEN)
+local colorBox = Instance.new("Frame", mainFrame)
+colorBox.Size = UDim2.new(0.9, 0, 0, 40)
+colorBox.Position = UDim2.new(0.05, 0, 0.6, 0)
+colorBox.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
+colorBox.BorderSizePixel = 0
+colorBox.Visible = false
+
+local mutationLabel = Instance.new("TextLabel", colorBox)
+mutationLabel.Size = UDim2.new(1, 0, 1, 0)
+mutationLabel.BackgroundTransparency = 1
+mutationLabel.Font = Enum.Font.FredokaOne
+mutationLabel.TextSize = 22
+mutationLabel.TextColor3 = Color3.new(1, 1, 1)
+mutationLabel.TextStrokeTransparency = 0.3
+
+local shuffleButton = Instance.new("TextButton", mainFrame)
+shuffleButton.Size = UDim2.new(0.8, 0, 0, 30)
+shuffleButton.Position = UDim2.new(0.1, 0, 0.82, 0)
+shuffleButton.BackgroundColor3 = Color3.fromRGB(70, 130, 180)
+shuffleButton.Text = "🔁 Shuffle"
+shuffleButton.Font = Enum.Font.FredokaOne
+shuffleButton.TextSize = 20
+shuffleButton.TextColor3 = Color3.new(1, 1, 1)
+shuffleButton.Visible = false
+
+-- PET MUTATIONS
+local mutations = {
+	{name="Ascended", weight=0.009},
+	{name="Rainbow", weight=0.009},
+	{name="Radiant Shocked", weight=0.05},
+	{name="Radiant", weight=0.071},
+	{name="Golden", weight=0.071},
+	{name="Windy", weight=0.071},
+	{name="Inverted", weight=0.071},
+	{name="Mega", weight=0.071},
+	{name="Shiny", weight=0.071},
+	{name="Frozen", weight=0.071},
+	{name="Iron Skin", weight=0.071},
+	{name="Shocked", weight=0.071},
+	{name="Tiny", weight=0.071},
+	{name="Tranquil", weight=0.071}
+}
+local mutationColors = {
+	["Ascended"] = Color3.fromRGB(255,215,0), ["Rainbow"] = Color3.fromRGB(255,0,255),
+	["Radiant Shocked"] = Color3.fromRGB(255,255,0), ["Radiant"] = Color3.fromRGB(255,255,102),
+	["Golden"] = Color3.fromRGB(255,223,0), ["Windy"] = Color3.fromRGB(173,216,230),
+	["Inverted"] = Color3.fromRGB(100,100,100), ["Mega"] = Color3.fromRGB(255,0,0),
+	["Shiny"] = Color3.fromRGB(192,192,192), ["Frozen"] = Color3.fromRGB(173,216,230),
+	["Iron Skin"] = Color3.fromRGB(169,169,169), ["Shocked"] = Color3.fromRGB(255,255,0),
+	["Tiny"] = Color3.fromRGB(144,238,144), ["Tranquil"] = Color3.fromRGB(135,206,235)
+}
+
+local function getRandomMutation()
+	local total = 0
+	for _, m in pairs(mutations) do total += m.weight end
+	local rand, cum = math.random(), 0
+	for _, m in pairs(mutations) do
+		cum += m.weight / total
+		if rand <= cum then return m.name end
+	end
+	return "Unknown"
 end
 
--- Emoji Labels 🐶 🦖 🦝
-local emojis = {"🐶", "🦖", "🦝"}
-local positions = {-85, -25, 35}
-local emojiLabels = {Emoji1, Emoji2, Emoji3}
+-- SHUFFLE FUNCTION
+shuffleButton.MouseButton1Click:Connect(function()
+	local mut = getRandomMutation()
+	mutationLabel.Text = mut
+	colorBox.BackgroundColor3 = mutationColors[mut] or Color3.fromRGB(255,255,255)
+end)
 
-for i, label in ipairs(emojiLabels) do
-	label.Parent = Frame
-	label.Size = UDim2.new(0, 50, 0, 30)
-	label.Position = UDim2.new(0.5, positions[i], 0, 10)
-	label.BackgroundTransparency = 1
-	label.Font = Enum.Font.SourceSansBold
-	label.Text = emojis[i]
-	label.TextColor3 = Color3.fromRGB(255, 255, 0)
-	label.TextSize = 28
-	label.TextXAlignment = Enum.TextXAlignment.Center
-	label.TextYAlignment = Enum.TextYAlignment.Center
-	createPulse(label)
-end
-
--- Avengers Logo (centered)
-Logo.Name = "Logo"
-Logo.Parent = Frame
-Logo.BackgroundTransparency = 1
-Logo.Position = UDim2.new(0.5, -30, 0, 50)
-Logo.Size = UDim2.new(0, 60, 0, 60)
-Logo.Image = "rbxassetid://7268802369" -- Marvel Avengers logo
-
--- Centered RD SCRIPTS text under logo
-BrandLabel.Name = "Brand"
-BrandLabel.Parent = Frame
-BrandLabel.BackgroundTransparency = 1
-BrandLabel.Position = UDim2.new(0.5, -100, 0, 115)
-BrandLabel.Size = UDim2.new(0, 200, 0, 30)
-BrandLabel.Font = Enum.Font.SourceSansBold
-BrandLabel.Text = "RD SCRIPTS"
-BrandLabel.TextColor3 = Color3.fromRGB(255, 0, 0)
-BrandLabel.TextSize = 28
-BrandLabel.TextXAlignment = Enum.TextXAlignment.Center
-
--- Message Text
-MessageLabel.Name = "Message"
-MessageLabel.Parent = Frame
-MessageLabel.BackgroundTransparency = 1
-MessageLabel.Position = UDim2.new(0.5, -200, 0, 160)
-MessageLabel.Size = UDim2.new(0, 400, 0, 120)
-MessageLabel.Font = Enum.Font.SourceSansBold
-MessageLabel.Text = "Currently not working on Delta.\nUse KRNL, or turn off your Anti Scam button on Delta."
-MessageLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-MessageLabel.TextSize = 18
-MessageLabel.TextWrapped = true
-MessageLabel.TextXAlignment = Enum.TextXAlignment.Center
-MessageLabel.TextYAlignment = Enum.TextYAlignment.Top
+-- COUNTDOWN BEFORE UI SHOW
+task.spawn(function()
+	for i = 5,1,-1 do
+		countdownText.Text = "Wait " .. i .. " seconds..."
+		wait(1)
+	end
+	startupText.Visible = false
+	countdownText.Visible = false
+	colorBox.Visible = true
+	shuffleButton.Visible = true
+end)
