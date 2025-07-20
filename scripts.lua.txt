@@ -88,13 +88,14 @@ local instructText = Instance.new("TextLabel", mainFrame)
 instructText.Size = UDim2.new(1, -20, 0, 30)
 instructText.Position = UDim2.new(0, 10, 0.13, 0)
 instructText.BackgroundTransparency = 1
-instructText.Text = "Shuffle to get your desired pet mutation from machine"
+instructText.Text = "PRESS SHUFFLE"
 instructText.TextColor3 = Color3.new(1, 1, 1)
 instructText.Font = Enum.Font.FredokaOne
-instructText.TextSize = 16
+instructText.TextSize = 20
 instructText.TextWrapped = true
 instructText.TextYAlignment = Enum.TextYAlignment.Center
 instructText.TextXAlignment = Enum.TextXAlignment.Center
+instructText.TextStrokeTransparency = 0.3
 instructText.Visible = false
 
 local colorBox = Instance.new("Frame", mainFrame)
