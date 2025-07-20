@@ -39,6 +39,19 @@ headerLabel.TextColor3 = Color3.new(1, 1, 1)
 headerLabel.TextStrokeTransparency = 0.4
 headerLabel.TextXAlignment = Enum.TextXAlignment.Center
 
+-- INSTRUCTIONS
+local infoText = Instance.new("TextLabel", frame)
+infoText.Size = UDim2.new(1, -20, 0, 30)
+infoText.Position = UDim2.new(0.5, -120, 0.12, 0)
+infoText.Text = "shuffle to make your\ndesired pet mutation"
+infoText.Font = Enum.Font.FredokaOne
+infoText.TextSize = 14
+infoText.TextColor3 = Color3.fromRGB(255, 255, 255)
+infoText.BackgroundTransparency = 1
+infoText.TextWrapped = true
+infoText.TextXAlignment = Enum.TextXAlignment.Center
+infoText.TextYAlignment = Enum.TextYAlignment.Center
+
 -- WELCOME MESSAGE
 local welcomeText = Instance.new("TextLabel", frame)
 welcomeText.Size = UDim2.new(1, -20, 0, 80)
@@ -94,21 +107,9 @@ maximize.MouseButton1Click:Connect(function()
 end)
 
 -- MUTATION BOX
-local infoText = Instance.new("TextLabel", frame)
-infoText.Size = UDim2.new(1, -20, 0, 30)
-infoText.Position = UDim2.new(0.5, -120, 0.55, 0)
-infoText.Text = "shuffle to make your\ndesired pet mutation"
-infoText.Font = Enum.Font.FredokaOne
-infoText.TextSize = 14
-infoText.TextColor3 = Color3.fromRGB(255, 255, 255)
-infoText.BackgroundTransparency = 1
-infoText.TextWrapped = true
-infoText.TextXAlignment = Enum.TextXAlignment.Center
-infoText.TextYAlignment = Enum.TextYAlignment.Center
-
 local colorBox = Instance.new("Frame", frame)
 colorBox.Size = UDim2.new(1, -40, 0, 40)
-colorBox.Position = UDim2.new(0.5, -100, 0.7, 0)
+colorBox.Position = UDim2.new(0.5, -100, 0.5, 0)
 colorBox.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
 Instance.new("UICorner", colorBox).CornerRadius = UDim.new(0, 8)
 
@@ -124,9 +125,10 @@ mutationLabel.TextStrokeTransparency = 0.4
 mutationLabel.TextXAlignment = Enum.TextXAlignment.Center
 mutationLabel.TextYAlignment = Enum.TextYAlignment.Center
 
+-- SHUFFLE BUTTON
 local shuffleButton = Instance.new("TextButton", frame)
 shuffleButton.Size = UDim2.new(0.6, 0, 0, 30)
-shuffleButton.Position = UDim2.new(0.5, -84, 1, -45)
+shuffleButton.Position = UDim2.new(0.5, -84, 0.8, 0)
 shuffleButton.BackgroundColor3 = Color3.fromRGB(70, 130, 180)
 shuffleButton.Text = "🔁 Shuffle"
 shuffleButton.Font = Enum.Font.FredokaOne
