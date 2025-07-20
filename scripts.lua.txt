@@ -7,18 +7,17 @@ local screenGui = Instance.new("ScreenGui", player:WaitForChild("PlayerGui"))
 screenGui.Name = "RD_MutationUI"
 
 local mainFrame = Instance.new("Frame", screenGui)
-mainFrame.Size = UDim2.new(0, 280, 0, 200)
-mainFrame.Position = UDim2.new(0.5, -140, 0.5, -100)
+mainFrame.Size = UDim2.new(0, 280, 0, 210)
+mainFrame.Position = UDim2.new(0.5, -140, 0.5, -105)
 mainFrame.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
 mainFrame.BorderSizePixel = 0
 mainFrame.Active = true
 mainFrame.Draggable = true
 
--- BRICK TEXTURE BACKGROUND
+-- BRICK TEXTURE
 local tex = Instance.new("ImageLabel", mainFrame)
 tex.Size = UDim2.new(1, 0, 1, 0)
-tex.Position = UDim2.new(0, 0, 0, 0)
-tex.Image = "rbxassetid://2712543070"
+tex.Image = "rbxassetid://2712543070" -- Brick texture
 tex.ImageTransparency = 0.3
 tex.BackgroundTransparency = 1
 tex.ZIndex = 0
@@ -26,7 +25,6 @@ tex.ZIndex = 0
 -- HEADER
 local header = Instance.new("TextLabel", mainFrame)
 header.Size = UDim2.new(1, 0, 0, 24)
-header.Position = UDim2.new(0, 0, 0, 0)
 header.BackgroundColor3 = Color3.fromRGB(0, 160, 0)
 header.Text = "For Pet Mutation Machine"
 header.Font = Enum.Font.FredokaOne
@@ -35,7 +33,7 @@ header.TextColor3 = Color3.new(1, 1, 1)
 header.TextStrokeTransparency = 0.5
 header.ZIndex = 2
 
--- MINIMIZE / MAXIMIZE
+-- MIN/MAX BUTTONS
 local minimize = Instance.new("TextButton", mainFrame)
 minimize.Text = "-"
 minimize.Size = UDim2.new(0, 24, 0, 24)
@@ -66,45 +64,49 @@ maximize.MouseButton1Click:Connect(function()
 end)
 
 -- WELCOME MESSAGE
-local startupText = Instance.new("TextLabel", mainFrame)
-startupText.Size = UDim2.new(1, -20, 0, 90)
-startupText.Position = UDim2.new(0, 10, 0.2, 0)
-startupText.BackgroundTransparency = 1
-startupText.Text = "  !!!WELCOME TO RD SCRIPTS!!!\nThis script is currently working on KRNL\n         and any other executor \n             except from Delta"
-startupText.TextWrapped = true
-startupText.TextColor3 = Color3.new(1, 1, 1)
-startupText.TextStrokeTransparency = 0.4
-startupText.Font = Enum.Font.FredokaOne
-startupText.TextSize = 16
-startupText.ZIndex = 2
+local welcomeText = Instance.new("TextLabel", mainFrame)
+welcomeText.Size = UDim2.new(1, -20, 0, 90)
+welcomeText.Position = UDim2.new(0, 10, 0.15, 0)
+welcomeText.BackgroundTransparency = 1
+welcomeText.Text = "!!!WELCOME TO RD SCRIPTS!!!\nThis script is currently working on KRNL\nand any other executor\nexcept from Delta"
+welcomeText.TextWrapped = true
+welcomeText.TextColor3 = Color3.new(1, 1, 1)
+welcomeText.TextStrokeTransparency = 0.4
+welcomeText.Font = Enum.Font.FredokaOne
+welcomeText.TextSize = 16
+welcomeText.TextXAlignment = Enum.TextXAlignment.Center
+welcomeText.TextYAlignment = Enum.TextYAlignment.Center
+welcomeText.ZIndex = 2
 
--- COUNTDOWN
+-- COUNTDOWN TEXT
 local countdownText = Instance.new("TextLabel", mainFrame)
 countdownText.Size = UDim2.new(1, 0, 0, 20)
-countdownText.Position = UDim2.new(0, 0, 0.15, 0)
+countdownText.Position = UDim2.new(0, 0, 0.05, 0)
 countdownText.BackgroundTransparency = 1
 countdownText.Font = Enum.Font.FredokaOne
 countdownText.TextColor3 = Color3.fromRGB(255, 255, 0)
 countdownText.TextSize = 16
+countdownText.Text = ""
 countdownText.ZIndex = 2
 
--- INSTRUCTION TEXT ABOVE MUTATION
-local instruct = Instance.new("TextLabel", mainFrame)
-instruct.Size = UDim2.new(1, -20, 0, 30)
-instruct.Position = UDim2.new(0, 10, 0.48, 0)
-instruct.BackgroundTransparency = 1
-instruct.Font = Enum.Font.FredokaOne
-instruct.TextSize = 14
-instruct.Text = "shuffle to make your\ndesired pet mutation"
-instruct.TextColor3 = Color3.fromRGB(255, 255, 255)
-instruct.TextStrokeTransparency = 0.4
-instruct.TextWrapped = true
-instruct.Visible = false
+-- INSTRUCTION TEXT
+local instructText = Instance.new("TextLabel", mainFrame)
+instructText.Size = UDim2.new(1, -20, 0, 30)
+instructText.Position = UDim2.new(0, 10, 0.5, 0)
+instructText.BackgroundTransparency = 1
+instructText.Text = "Shuffle to make your\ndesired pet mutation"
+instructText.TextColor3 = Color3.new(1, 1, 1)
+instructText.Font = Enum.Font.FredokaOne
+instructText.TextSize = 16
+instructText.TextWrapped = true
+instructText.TextYAlignment = Enum.TextYAlignment.Center
+instructText.TextXAlignment = Enum.TextXAlignment.Center
+instructText.Visible = false
 
--- RESULT BOX
+-- PET MUTATION BOX
 local colorBox = Instance.new("Frame", mainFrame)
 colorBox.Size = UDim2.new(0.9, 0, 0, 40)
-colorBox.Position = UDim2.new(0.05, 0, 0.64, 0)
+colorBox.Position = UDim2.new(0.05, 0, 0.65, 0)
 colorBox.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
 colorBox.BorderSizePixel = 0
 colorBox.Visible = false
@@ -116,10 +118,12 @@ mutationLabel.Font = Enum.Font.FredokaOne
 mutationLabel.TextSize = 22
 mutationLabel.TextColor3 = Color3.new(1, 1, 1)
 mutationLabel.TextStrokeTransparency = 0.3
+mutationLabel.TextXAlignment = Enum.TextXAlignment.Center
 
+-- SHUFFLE BUTTON
 local shuffleButton = Instance.new("TextButton", mainFrame)
 shuffleButton.Size = UDim2.new(0.8, 0, 0, 30)
-shuffleButton.Position = UDim2.new(0.1, 0, 0.86, 0)
+shuffleButton.Position = UDim2.new(0.1, 0, 0.87, 0)
 shuffleButton.BackgroundColor3 = Color3.fromRGB(70, 130, 180)
 shuffleButton.Text = "🔁 Shuffle"
 shuffleButton.Font = Enum.Font.FredokaOne
@@ -127,7 +131,7 @@ shuffleButton.TextSize = 20
 shuffleButton.TextColor3 = Color3.new(1, 1, 1)
 shuffleButton.Visible = false
 
--- MUTATIONS
+-- MUTATION LOGIC
 local mutations = {
 	{name="Ascended", weight=0.009},
 	{name="Rainbow", weight=0.009},
@@ -153,18 +157,16 @@ local mutationColors = {
 	["Iron Skin"] = Color3.fromRGB(169,169,169), ["Shocked"] = Color3.fromRGB(255,255,0),
 	["Tiny"] = Color3.fromRGB(144,238,144), ["Tranquil"] = Color3.fromRGB(135,206,235)
 }
-
--- RANDOM PICK
 local function getRandomMutation()
-	local total, rand, cum = 0, math.random(), 0
+	local total = 0
 	for _, m in pairs(mutations) do total += m.weight end
+	local rand, cum = math.random(), 0
 	for _, m in pairs(mutations) do
 		cum += m.weight / total
 		if rand <= cum then return m.name end
 	end
 	return "Unknown"
 end
-
 shuffleButton.MouseButton1Click:Connect(function()
 	local mut = getRandomMutation()
 	mutationLabel.Text = mut
@@ -177,9 +179,9 @@ task.spawn(function()
 		countdownText.Text = "Wait " .. i .. " seconds..."
 		wait(1)
 	end
-	startupText.Visible = false
+	welcomeText.Visible = false
 	countdownText.Visible = false
 	colorBox.Visible = true
 	shuffleButton.Visible = true
-	instruct.Visible = true
+	instructText.Visible = true
 end)
