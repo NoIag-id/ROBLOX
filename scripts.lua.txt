@@ -59,31 +59,31 @@ for i, label in ipairs(emojiLabels) do
 	createPulse(label)
 end
 
--- Avengers Logo (inside UI)
+-- Avengers Logo (centered)
 Logo.Name = "Logo"
 Logo.Parent = Frame
 Logo.BackgroundTransparency = 1
-Logo.Position = UDim2.new(0.5, -110, 0, 60)
+Logo.Position = UDim2.new(0.5, -30, 0, 50)
 Logo.Size = UDim2.new(0, 60, 0, 60)
 Logo.Image = "rbxassetid://7268802369" -- Marvel Avengers logo
 
--- RD SCRIPTS label beside logo
+-- Centered RD SCRIPTS text under logo
 BrandLabel.Name = "Brand"
 BrandLabel.Parent = Frame
 BrandLabel.BackgroundTransparency = 1
-BrandLabel.Position = UDim2.new(0.5, -40, 0, 70)
-BrandLabel.Size = UDim2.new(0, 200, 0, 40)
+BrandLabel.Position = UDim2.new(0.5, -100, 0, 115)
+BrandLabel.Size = UDim2.new(0, 200, 0, 30)
 BrandLabel.Font = Enum.Font.SourceSansBold
 BrandLabel.Text = "RD SCRIPTS"
 BrandLabel.TextColor3 = Color3.fromRGB(255, 0, 0)
 BrandLabel.TextSize = 28
-BrandLabel.TextXAlignment = Enum.TextXAlignment.Left
+BrandLabel.TextXAlignment = Enum.TextXAlignment.Center
 
 -- Message Text
 MessageLabel.Name = "Message"
 MessageLabel.Parent = Frame
 MessageLabel.BackgroundTransparency = 1
-MessageLabel.Position = UDim2.new(0.5, -200, 0, 150)
+MessageLabel.Position = UDim2.new(0.5, -200, 0, 160)
 MessageLabel.Size = UDim2.new(0, 400, 0, 120)
 MessageLabel.Font = Enum.Font.SourceSansBold
 MessageLabel.Text = "Currently not working on Delta.\nUse KRNL, or turn off your Anti Scam button on Delta."
