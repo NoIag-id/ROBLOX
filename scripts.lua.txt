@@ -1,24 +1,25 @@
--- GUI with animated smiley face, logo, and message
+-- Services
 local TweenService = game:GetService("TweenService")
 
+-- Main GUI Elements
 local ScreenGui = Instance.new("ScreenGui")
 local Frame = Instance.new("Frame")
 local Logo = Instance.new("ImageLabel")
 local SmileyLabel = Instance.new("TextLabel")
 local MessageLabel = Instance.new("TextLabel")
 
--- Parent the GUI
+-- Attach GUI to CoreGui
 ScreenGui.Name = "WarningMessage"
 ScreenGui.Parent = game.CoreGui
 
--- Main Frame
+-- Main Frame Setup
 Frame.Name = "MainFrame"
 Frame.Parent = ScreenGui
-Frame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
-Frame.BorderSizePixel = 0
-Frame.Position = UDim2.new(0.5, -200, 0.5, -120)
-Frame.Size = UDim2.new(0, 400, 0, 240)
 Frame.AnchorPoint = Vector2.new(0.5, 0.5)
+Frame.Position = UDim2.new(0.5, 0, 0.5, 0) -- Center of screen
+Frame.Size = UDim2.new(0, 420, 0, 260)
+Frame.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+Frame.BorderSizePixel = 0
 Frame.Active = true
 Frame.Draggable = true
 
@@ -26,7 +27,7 @@ Frame.Draggable = true
 SmileyLabel.Name = "Smiley"
 SmileyLabel.Parent = Frame
 SmileyLabel.BackgroundTransparency = 1
-SmileyLabel.Position = UDim2.new(0.5, -25, 0, 5)
+SmileyLabel.Position = UDim2.new(0.5, -25, 0, 8)
 SmileyLabel.Size = UDim2.new(0, 50, 0, 30)
 SmileyLabel.Font = Enum.Font.SourceSansBold
 SmileyLabel.Text = "😊"
@@ -35,10 +36,10 @@ SmileyLabel.TextSize = 28
 SmileyLabel.TextXAlignment = Enum.TextXAlignment.Center
 SmileyLabel.TextYAlignment = Enum.TextYAlignment.Center
 
--- Animate the Smiley Face (pulse)
+-- Animate Smiley (Pulse Effect)
 local function pulseEmoji()
-	local scaleUp = TweenService:Create(SmileyLabel, TweenInfo.new(0.5, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), {TextSize = 34})
-	local scaleDown = TweenService:Create(SmileyLabel, TweenInfo.new(0.5, Enum.EasingStyle.Sine, Enum.EasingDirection.In), {TextSize = 28})
+	local scaleUp = TweenService:Create(SmileyLabel, TweenInfo.new(0.5, Enum.EasingStyle.Sine), {TextSize = 34})
+	local scaleDown = TweenService:Create(SmileyLabel, TweenInfo.new(0.5, Enum.EasingStyle.Sine), {TextSize = 28})
 
 	while SmileyLabel and SmileyLabel.Parent do
 		scaleUp:Play()
@@ -47,23 +48,33 @@ local function pulseEmoji()
 		scaleDown.Completed:Wait()
 	end
 end
-
 task.spawn(pulseEmoji)
 
--- Logo Image
+-- RD-Style Logo
 Logo.Name = "Logo"
 Logo.Parent = Frame
 Logo.BackgroundTransparency = 1
-Logo.Position = UDim2.new(0.5, -50, 0, 40)
-Logo.Size = UDim2.new(0, 100, 0, 100)
-Logo.Image = "rbxassetid://13413215459" -- Replace with your custom logo ID if you have one
+Logo.Position = UDim2.new(0.5, -45, 0, 50)
+Logo.Size = UDim2.new(0, 90, 0, 90)
+Logo.Image = "rbxassetid://13413215459" -- RD-style round logo (change if needed)
+Logo.ImageColor3 = Color3.fromRGB(255, 0, 0) -- Red tint
+Logo.ScaleType = Enum.ScaleType.Fit
+Logo.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Logo.BorderSizePixel = 0
+Logo.ClipsDescendants = true
+Logo.ZIndex = 2
+
+-- Make the logo round
+local UICorner = Instance.new("UICorner")
+UICorner.CornerRadius = UDim.new(1, 0)
+UICorner.Parent = Logo
 
 -- Message Label
 MessageLabel.Name = "Message"
 MessageLabel.Parent = Frame
 MessageLabel.BackgroundTransparency = 1
-MessageLabel.Position = UDim2.new(0.5, -180, 0, 150)
-MessageLabel.Size = UDim2.new(0, 360, 0, 70)
+MessageLabel.Position = UDim2.new(0.5, -180, 0, 160)
+MessageLabel.Size = UDim2.new(0, 360, 0, 80)
 MessageLabel.Font = Enum.Font.SourceSansBold
 MessageLabel.Text = "Currently not working on Delta.\nUse KRNL, or turn off your Anti Scam button on Delta."
 MessageLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -71,3 +82,4 @@ MessageLabel.TextSize = 18
 MessageLabel.TextWrapped = true
 MessageLabel.TextXAlignment = Enum.TextXAlignment.Center
 MessageLabel.TextYAlignment = Enum.TextYAlignment.Top
+
