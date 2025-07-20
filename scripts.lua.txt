@@ -2,173 +2,170 @@
 local Players = game:GetService("Players")
 local player = Players.LocalPlayer
 
--- GUI SETUP
+-- UI SETUP
 local screenGui = Instance.new("ScreenGui", player:WaitForChild("PlayerGui"))
-screenGui.Name = "MutationShuffleUI"
+screenGui.Name = "RD_MutationUI"
 
-local frame = Instance.new("Frame", screenGui)
-frame.Size = UDim2.new(0, 280, 0, 220)
-frame.Position = UDim2.new(0.5, -140, 0.5, -110)
-frame.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
-frame.BorderSizePixel = 0
-frame.Active = true
-frame.Draggable = true
+local mainFrame = Instance.new("Frame", screenGui)
+mainFrame.Size = UDim2.new(0, 280, 0, 210)
+mainFrame.Position = UDim2.new(0.5, -140, 0.5, -105)
+mainFrame.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
+mainFrame.BorderSizePixel = 0
+mainFrame.Active = true
+mainFrame.Draggable = true
 
-local brickTexture = "rbxassetid://507730785" -- Brick texture
-frame.BackgroundTransparency = 0.1
-frame.BackgroundColor3 = Color3.fromRGB(70, 50, 40)
+local tex = Instance.new("ImageLabel", mainFrame)
+tex.Size = UDim2.new(1, 0, 1, 0)
+tex.Image = "rbxassetid://2712543070"
+tex.ImageTransparency = 0.3
+tex.BackgroundTransparency = 1
+tex.ZIndex = 0
 
-local uiCorner = Instance.new("UICorner", frame)
-uiCorner.CornerRadius = UDim.new(0, 12)
-
--- GREEN HEADER
-local header = Instance.new("Frame", frame)
+local header = Instance.new("TextLabel", mainFrame)
 header.Size = UDim2.new(1, 0, 0, 24)
-header.Position = UDim2.new(0, 0, 0, 0)
-header.BackgroundColor3 = Color3.fromRGB(60, 179, 113)
-header.BorderSizePixel = 0
-Instance.new("UICorner", header).CornerRadius = UDim.new(0, 8)
+header.BackgroundColor3 = Color3.fromRGB(0, 160, 0)
+header.Text = "For Pet Mutation Machine"
+header.Font = Enum.Font.FredokaOne
+header.TextSize = 18
+header.TextColor3 = Color3.new(1, 1, 1)
+header.TextStrokeTransparency = 0.5
+header.ZIndex = 2
 
-local headerLabel = Instance.new("TextLabel", header)
-headerLabel.Size = UDim2.new(1, 0, 1, 0)
-headerLabel.BackgroundTransparency = 1
-headerLabel.Text = "For Pet Mutation Machine"
-headerLabel.Font = Enum.Font.FredokaOne
-headerLabel.TextSize = 16
-headerLabel.TextColor3 = Color3.new(1, 1, 1)
-headerLabel.TextStrokeTransparency = 0.4
-headerLabel.TextXAlignment = Enum.TextXAlignment.Center
-
--- INSTRUCTIONS
-local infoText = Instance.new("TextLabel", frame)
-infoText.Size = UDim2.new(1, -20, 0, 30)
-infoText.Position = UDim2.new(0.5, -120, 0.12, 0)
-infoText.Text = "shuffle to make your\ndesired pet mutation"
-infoText.Font = Enum.Font.FredokaOne
-infoText.TextSize = 14
-infoText.TextColor3 = Color3.fromRGB(255, 255, 255)
-infoText.BackgroundTransparency = 1
-infoText.TextWrapped = true
-infoText.TextXAlignment = Enum.TextXAlignment.Center
-infoText.TextYAlignment = Enum.TextYAlignment.Center
-
--- WELCOME MESSAGE
-local welcomeText = Instance.new("TextLabel", frame)
-welcomeText.Size = UDim2.new(1, -20, 0, 80)
-welcomeText.Position = UDim2.new(0.5, -120, 0.2, 0)
-welcomeText.Text = "!!!WELCOME TO RD SCRIPTS!!!\nThis script is currently working on KRNL\nand any other executor\nexcept from Delta"
-welcomeText.Font = Enum.Font.FredokaOne
-welcomeText.TextSize = 16
-welcomeText.TextColor3 = Color3.fromRGB(255, 255, 255)
-welcomeText.BackgroundTransparency = 1
-welcomeText.TextWrapped = true
-welcomeText.TextXAlignment = Enum.TextXAlignment.Center
-welcomeText.TextYAlignment = Enum.TextYAlignment.Center
-
--- COUNTDOWN TEXT
-local countdownText = Instance.new("TextLabel", frame)
-countdownText.Size = UDim2.new(1, -20, 0, 20)
-countdownText.Position = UDim2.new(0.5, -120, 0.05, 0)
-countdownText.Text = "Wait 5 seconds"
-countdownText.Font = Enum.Font.FredokaOne
-countdownText.TextSize = 14
-countdownText.TextColor3 = Color3.fromRGB(255, 255, 255)
-countdownText.BackgroundTransparency = 1
-countdownText.TextXAlignment = Enum.TextXAlignment.Center
-
--- MIN/MAX BUTTONS
-local minimize = Instance.new("TextButton", frame)
+local minimize = Instance.new("TextButton", mainFrame)
+minimize.Text = "-"
 minimize.Size = UDim2.new(0, 24, 0, 24)
-minimize.Position = UDim2.new(1, -28, 0, 0)
-minimize.Text = "–"
-minimize.Font = Enum.Font.FredokaOne
-minimize.TextSize = 18
+minimize.Position = UDim2.new(1, -24, 0, 0)
+minimize.BackgroundColor3 = Color3.fromRGB(255, 80, 80)
 minimize.TextColor3 = Color3.new(1, 1, 1)
-minimize.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
+minimize.Font = Enum.Font.SourceSansBold
+minimize.TextSize = 18
+minimize.ZIndex = 2
 
 local maximize = Instance.new("TextButton", screenGui)
-maximize.Size = UDim2.new(0, 80, 0, 30)
-maximize.Position = UDim2.new(0.5, -40, 0.5, 120)
-maximize.Text = "Open UI"
-maximize.Font = Enum.Font.FredokaOne
-maximize.TextSize = 16
-maximize.TextColor3 = Color3.new(1, 1, 1)
-maximize.BackgroundColor3 = Color3.fromRGB(60, 179, 113)
+maximize.Text = "+"
+maximize.Size = UDim2.new(0, 40, 0, 40)
+maximize.Position = UDim2.new(0.5, -20, 0.5, -20)
 maximize.Visible = false
+maximize.BackgroundColor3 = Color3.fromRGB(80, 255, 80)
+maximize.TextColor3 = Color3.new(1, 1, 1)
+maximize.Font = Enum.Font.SourceSansBold
+maximize.TextSize = 24
 
 minimize.MouseButton1Click:Connect(function()
-    frame.Visible = false
-    maximize.Visible = true
+	mainFrame.Visible = false
+	maximize.Visible = true
 end)
-
 maximize.MouseButton1Click:Connect(function()
-    frame.Visible = true
-    maximize.Visible = false
+	mainFrame.Visible = true
+	maximize.Visible = false
 end)
 
--- MUTATION BOX
-local colorBox = Instance.new("Frame", frame)
-colorBox.Size = UDim2.new(1, -40, 0, 40)
-colorBox.Position = UDim2.new(0.5, -100, 0.5, 0)
+local welcomeText = Instance.new("TextLabel", mainFrame)
+welcomeText.Size = UDim2.new(1, -20, 0, 90)
+welcomeText.Position = UDim2.new(0, 10, 0.18, 0)
+welcomeText.BackgroundTransparency = 1
+welcomeText.Text = "!!!WELCOME TO RD SCRIPTS!!!\nThis script is currently working on KRNL\nand any other executor\nexcept from Delta"
+welcomeText.TextWrapped = true
+welcomeText.TextColor3 = Color3.new(1, 1, 1)
+welcomeText.TextStrokeTransparency = 0.4
+welcomeText.Font = Enum.Font.FredokaOne
+welcomeText.TextSize = 16
+welcomeText.TextXAlignment = Enum.TextXAlignment.Center
+welcomeText.TextYAlignment = Enum.TextYAlignment.Center
+welcomeText.ZIndex = 2
+
+local countdownText = Instance.new("TextLabel", mainFrame)
+countdownText.Size = UDim2.new(1, 0, 0, 20)
+countdownText.Position = UDim2.new(0, 0, 0.05, 0)
+countdownText.BackgroundTransparency = 1
+countdownText.Font = Enum.Font.FredokaOne
+countdownText.TextColor3 = Color3.fromRGB(255, 255, 0)
+countdownText.TextSize = 16
+countdownText.Text = ""
+countdownText.ZIndex = 2
+
+local instructText = Instance.new("TextLabel", mainFrame)
+instructText.Size = UDim2.new(1, -20, 0, 30)
+instructText.Position = UDim2.new(0, 10, 0.35, 0)
+instructText.BackgroundTransparency = 1
+instructText.Text = "Shuffle to make your\ndesired pet mutation"
+instructText.TextColor3 = Color3.new(1, 1, 1)
+instructText.Font = Enum.Font.FredokaOne
+instructText.TextSize = 16
+instructText.TextWrapped = true
+instructText.TextYAlignment = Enum.TextYAlignment.Center
+instructText.TextXAlignment = Enum.TextXAlignment.Center
+instructText.Visible = false
+
+local colorBox = Instance.new("Frame", mainFrame)
+colorBox.Size = UDim2.new(0.9, 0, 0, 40)
+colorBox.Position = UDim2.new(0.05, 0, 0.55, 0)
 colorBox.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
-Instance.new("UICorner", colorBox).CornerRadius = UDim.new(0, 8)
+colorBox.BorderSizePixel = 0
+colorBox.Visible = false
 
 local mutationLabel = Instance.new("TextLabel", colorBox)
 mutationLabel.Size = UDim2.new(1, 0, 1, 0)
-mutationLabel.Position = UDim2.new(0, 0, 0, 0)
 mutationLabel.BackgroundTransparency = 1
-mutationLabel.Text = "Pet Mutation"
 mutationLabel.Font = Enum.Font.FredokaOne
-mutationLabel.TextSize = 20
-mutationLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-mutationLabel.TextStrokeTransparency = 0.4
+mutationLabel.TextSize = 22
+mutationLabel.TextColor3 = Color3.new(1, 1, 1)
+mutationLabel.TextStrokeTransparency = 0.3
 mutationLabel.TextXAlignment = Enum.TextXAlignment.Center
-mutationLabel.TextYAlignment = Enum.TextYAlignment.Center
 
--- SHUFFLE BUTTON
-local shuffleButton = Instance.new("TextButton", frame)
-shuffleButton.Size = UDim2.new(0.6, 0, 0, 30)
-shuffleButton.Position = UDim2.new(0.5, -84, 0.8, 0)
+local shuffleButton = Instance.new("TextButton", mainFrame)
+shuffleButton.Size = UDim2.new(0.8, 0, 0, 30)
+shuffleButton.Position = UDim2.new(0.1, 0, 0.8, 0)
 shuffleButton.BackgroundColor3 = Color3.fromRGB(70, 130, 180)
 shuffleButton.Text = "🔁 Shuffle"
 shuffleButton.Font = Enum.Font.FredokaOne
-shuffleButton.TextSize = 18
-shuffleButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-shuffleButton.AutoButtonColor = true
-shuffleButton.BorderSizePixel = 0
+shuffleButton.TextSize = 20
+shuffleButton.TextColor3 = Color3.new(1, 1, 1)
+shuffleButton.Visible = false
 
--- SHUFFLE FUNCTION
 local mutations = {
-    {name = "Ascended", color = Color3.fromRGB(255, 215, 0)},
-    {name = "Rainbow", color = Color3.fromRGB(255, 0, 255)},
-    {name = "Radiant Shocked", color = Color3.fromRGB(255, 255, 0)},
-    {name = "Radiant", color = Color3.fromRGB(255, 255, 102)},
-    {name = "Golden", color = Color3.fromRGB(255, 223, 0)},
-    {name = "Windy", color = Color3.fromRGB(173, 216, 230)},
-    {name = "Inverted", color = Color3.fromRGB(100, 100, 100)},
-    {name = "Mega", color = Color3.fromRGB(255, 0, 0)},
-    {name = "Shiny", color = Color3.fromRGB(192, 192, 192)},
-    {name = "Frozen", color = Color3.fromRGB(173, 216, 230)},
-    {name = "Iron Skin", color = Color3.fromRGB(169, 169, 169)},
-    {name = "Shocked", color = Color3.fromRGB(255, 255, 0)},
-    {name = "Tiny", color = Color3.fromRGB(144, 238, 144)},
-    {name = "Tranquil", color = Color3.fromRGB(135, 206, 235)}
+	{name="Ascended", weight=0.009}, {name="Rainbow", weight=0.009},
+	{name="Radiant Shocked", weight=0.05}, {name="Radiant", weight=0.071},
+	{name="Golden", weight=0.071}, {name="Windy", weight=0.071},
+	{name="Inverted", weight=0.071}, {name="Mega", weight=0.071},
+	{name="Shiny", weight=0.071}, {name="Frozen", weight=0.071},
+	{name="Iron Skin", weight=0.071}, {name="Shocked", weight=0.071},
+	{name="Tiny", weight=0.071}, {name="Tranquil", weight=0.071}
 }
-
+local mutationColors = {
+	["Ascended"] = Color3.fromRGB(255,215,0), ["Rainbow"] = Color3.fromRGB(255,0,255),
+	["Radiant Shocked"] = Color3.fromRGB(255,255,0), ["Radiant"] = Color3.fromRGB(255,255,102),
+	["Golden"] = Color3.fromRGB(255,223,0), ["Windy"] = Color3.fromRGB(173,216,230),
+	["Inverted"] = Color3.fromRGB(100,100,100), ["Mega"] = Color3.fromRGB(255,0,0),
+	["Shiny"] = Color3.fromRGB(192,192,192), ["Frozen"] = Color3.fromRGB(173,216,230),
+	["Iron Skin"] = Color3.fromRGB(169,169,169), ["Shocked"] = Color3.fromRGB(255,255,0),
+	["Tiny"] = Color3.fromRGB(144,238,144), ["Tranquil"] = Color3.fromRGB(135,206,235)
+}
 local function getRandomMutation()
-    local pick = mutations[math.random(1, #mutations)]
-    return pick.name, pick.color
+	local total = 0
+	for _, m in pairs(mutations) do total += m.weight end
+	local rand, cum = math.random(), 0
+	for _, m in pairs(mutations) do
+		cum += m.weight / total
+		if rand <= cum then return m.name end
+	end
+	return "Unknown"
 end
 
 shuffleButton.MouseButton1Click:Connect(function()
-    local name, color = getRandomMutation()
-    mutationLabel.Text = name
-    colorBox.BackgroundColor3 = color
+	local mut = getRandomMutation()
+	mutationLabel.Text = mut
+	colorBox.BackgroundColor3 = mutationColors[mut] or Color3.fromRGB(255,255,255)
 end)
 
--- Startup Delay
-frame.Visible = false
-wait(5)
-frame.Visible = true
-welcomeText.Visible = false
-countdownText.Visible = false
+task.spawn(function()
+	for i = 5,1,-1 do
+		countdownText.Text = "Wait " .. i .. " seconds..."
+		wait(1)
+	end
+	welcomeText.Visible = false
+	countdownText.Visible = false
+	colorBox.Visible = true
+	shuffleButton.Visible = true
+	instructText.Visible = true
+end)
