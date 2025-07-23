@@ -1,172 +1,67 @@
--- SERVICES
-local Players = game:GetService("Players")
-local player = Players.LocalPlayer
+<meta name='viewport' content='width=device-width, initial-scale=1'/>-- Detect executor
+local executor = identifyexecutor and identifyexecutor():lower() or "unknown"
+local isDelta = executor:find("delta")
+local isKrnl = executor:find("krnl")
 
--- UI SETUP
-local screenGui = Instance.new("ScreenGui", player:WaitForChild("PlayerGui"))
-screenGui.Name = "RD_MutationUI"
+if isDelta then
+    -- Fullscreen warning GUI
+    local ScreenGui = Instance.new("ScreenGui")
+    ScreenGui.Name = "DeltaWarning"
+    ScreenGui.ResetOnSpawn = false
+    ScreenGui.IgnoreGuiInset = true
+    ScreenGui.Parent = game:GetService("CoreGui")
 
-local mainFrame = Instance.new("Frame", screenGui)
-mainFrame.Size = UDim2.new(0, 280, 0, 210)
-mainFrame.Position = UDim2.new(0.5, -140, 0.5, -105)
-mainFrame.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
-mainFrame.BorderSizePixel = 0
-mainFrame.Active = true
-mainFrame.Draggable = true
+    local Frame = Instance.new("Frame")
+    Frame.Parent = ScreenGui
+    Frame.Size = UDim2.new(1, 0, 1, 0)
+    Frame.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
 
-local tex = Instance.new("ImageLabel", mainFrame)
-tex.Size = UDim2.new(1, 0, 1, 0)
-tex.Image = "rbxassetid://2712543070"
-tex.ImageTransparency = 0.3
-tex.BackgroundTransparency = 1
-tex.ZIndex = 0
+    local TextLabel = Instance.new("TextLabel")
+    TextLabel.Parent = Frame
+    TextLabel.Text = "⚠ Delta Executor is considered unsafe and will not run this script.\n\nPlease use the trusted KRNL executor instead."
+    TextLabel.Size = UDim2.new(1, -100, 0.4, 0)
+    TextLabel.Position = UDim2.new(0, 50, 0.15, 0)
+    TextLabel.BackgroundTransparency = 1
+    TextLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+    TextLabel.Font = Enum.Font.SourceSansBold
+    TextLabel.TextScaled = true
+    TextLabel.TextWrapped = true
 
-local header = Instance.new("TextLabel", mainFrame)
-header.Size = UDim2.new(1, 0, 0, 24)
-header.BackgroundColor3 = Color3.fromRGB(0, 160, 0)
-header.Text = "For Pet Mutation Machine"
-header.Font = Enum.Font.FredokaOne
-header.TextSize = 18
-header.TextColor3 = Color3.new(1, 1, 1)
-header.TextStrokeTransparency = 0.5
-header.ZIndex = 2
+    local CopyButton = Instance.new("TextButton")
+    CopyButton.Parent = Frame
+    CopyButton.Text = "Copy KRNL Link"
+    CopyButton.Size = UDim2.new(0, 300, 0, 60)
+    CopyButton.Position = UDim2.new(0.5, -150, 0.6, 0)
+    CopyButton.BackgroundColor3 = Color3.fromRGB(0, 170, 255)
+    CopyButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+    CopyButton.Font = Enum.Font.SourceSansBold
+    CopyButton.TextScaled = true
 
-local minimize = Instance.new("TextButton", mainFrame)
-minimize.Text = "-"
-minimize.Size = UDim2.new(0, 24, 0, 24)
-minimize.Position = UDim2.new(1, -24, 0, 0)
-minimize.BackgroundColor3 = Color3.fromRGB(255, 80, 80)
-minimize.TextColor3 = Color3.new(1, 1, 1)
-minimize.Font = Enum.Font.SourceSansBold
-minimize.TextSize = 18
-minimize.ZIndex = 2
+    CopyButton.MouseButton1Click:Connect(function()
+        setclipboard("https://krnl.place/")
+        CopyButton.Text = "Copied!"
+    end)
 
-local maximize = Instance.new("TextButton", screenGui)
-maximize.Text = "+"
-maximize.Size = UDim2.new(0, 40, 0, 40)
-maximize.Position = UDim2.new(0.5, -20, 0.5, -20)
-maximize.Visible = false
-maximize.BackgroundColor3 = Color3.fromRGB(80, 255, 80)
-maximize.TextColor3 = Color3.new(1, 1, 1)
-maximize.Font = Enum.Font.SourceSansBold
-maximize.TextSize = 24
+    local Countdown = Instance.new("TextLabel")
+    Countdown.Parent = Frame
+    Countdown.Text = "Closing in 20 seconds..."
+    Countdown.Size = UDim2.new(1, 0, 0, 50)
+    Countdown.Position = UDim2.new(0, 0, 0.9, 0)
+    Countdown.BackgroundTransparency = 1
+    Countdown.Font = Enum.Font.SourceSansBold
+    Countdown.TextColor3 = Color3.fromRGB(255, 0, 0)
+    Countdown.TextScaled = true
 
-minimize.MouseButton1Click:Connect(function()
-	mainFrame.Visible = false
-	maximize.Visible = true
-end)
-maximize.MouseButton1Click:Connect(function()
-	mainFrame.Visible = true
-	maximize.Visible = false
-end)
+    -- Countdown logic
+    for i = 19, 0, -1 do
+        task.wait(1)
+        Countdown.Text = "Closing in " .. i .. " seconds..."
+    end
 
-local welcomeText = Instance.new("TextLabel", mainFrame)
-welcomeText.Size = UDim2.new(1, -20, 0, 90)
-welcomeText.Position = UDim2.new(0, 10, 0.18, 0)
-welcomeText.BackgroundTransparency = 1
-welcomeText.Text = "!!!WELCOME TO RD SCRIPTS!!!\nThis script is currently working on KRNL\nand any other executor\nexcept from Delta"
-welcomeText.TextWrapped = true
-welcomeText.TextColor3 = Color3.new(1, 1, 1)
-welcomeText.TextStrokeTransparency = 0.4
-welcomeText.Font = Enum.Font.FredokaOne
-welcomeText.TextSize = 16
-welcomeText.TextXAlignment = Enum.TextXAlignment.Center
-welcomeText.TextYAlignment = Enum.TextYAlignment.Center
-welcomeText.ZIndex = 2
+    ScreenGui:Destroy()
 
-local countdownText = Instance.new("TextLabel", mainFrame)
-countdownText.Size = UDim2.new(1, 0, 0, 20)
-countdownText.Position = UDim2.new(0, 0, 0.05, 0)
-countdownText.BackgroundTransparency = 1
-countdownText.Font = Enum.Font.FredokaOne
-countdownText.TextColor3 = Color3.fromRGB(255, 255, 0)
-countdownText.TextSize = 16
-countdownText.Text = ""
-countdownText.ZIndex = 2
-
-local instructText = Instance.new("TextLabel", mainFrame)
-instructText.Size = UDim2.new(1, -20, 0, 30)
-instructText.Position = UDim2.new(0, 10, 0.13, 0)
-instructText.BackgroundTransparency = 1
-instructText.Text = "PRESS SHUFFLE"
-instructText.TextColor3 = Color3.new(1, 1, 1)
-instructText.Font = Enum.Font.FredokaOne
-instructText.TextSize = 20
-instructText.TextWrapped = true
-instructText.TextYAlignment = Enum.TextYAlignment.Center
-instructText.TextXAlignment = Enum.TextXAlignment.Center
-instructText.TextStrokeTransparency = 0.3
-instructText.Visible = false
-
-local colorBox = Instance.new("Frame", mainFrame)
-colorBox.Size = UDim2.new(0.9, 0, 0, 40)
-colorBox.Position = UDim2.new(0.05, 0, 0.45, 0)
-colorBox.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
-colorBox.BorderSizePixel = 0
-colorBox.Visible = false
-
-local mutationLabel = Instance.new("TextLabel", colorBox)
-mutationLabel.Size = UDim2.new(1, 0, 1, 0)
-mutationLabel.BackgroundTransparency = 1
-mutationLabel.Font = Enum.Font.FredokaOne
-mutationLabel.TextSize = 22
-mutationLabel.TextColor3 = Color3.new(1, 1, 1)
-mutationLabel.TextStrokeTransparency = 0.3
-mutationLabel.TextXAlignment = Enum.TextXAlignment.Center
-
-local shuffleButton = Instance.new("TextButton", mainFrame)
-shuffleButton.Size = UDim2.new(0.8, 0, 0, 30)
-shuffleButton.Position = UDim2.new(0.1, 0, 0.7, 0)
-shuffleButton.BackgroundColor3 = Color3.fromRGB(70, 130, 180)
-shuffleButton.Text = "🔁 Shuffle"
-shuffleButton.Font = Enum.Font.FredokaOne
-shuffleButton.TextSize = 20
-shuffleButton.TextColor3 = Color3.new(1, 1, 1)
-shuffleButton.Visible = false
-
-local mutations = {
-	{name="Ascended", weight=0.009}, {name="Rainbow", weight=0.009},
-	{name="Radiant Shocked", weight=0.05}, {name="Radiant", weight=0.071},
-	{name="Golden", weight=0.071}, {name="Windy", weight=0.071},
-	{name="Inverted", weight=0.071}, {name="Mega", weight=0.071},
-	{name="Shiny", weight=0.071}, {name="Frozen", weight=0.071},
-	{name="Iron Skin", weight=0.071}, {name="Shocked", weight=0.071},
-	{name="Tiny", weight=0.071}, {name="Tranquil", weight=0.071}
-}
-local mutationColors = {
-	["Ascended"] = Color3.fromRGB(255,215,0), ["Rainbow"] = Color3.fromRGB(255,0,255),
-	["Radiant Shocked"] = Color3.fromRGB(255,255,0), ["Radiant"] = Color3.fromRGB(255,255,102),
-	["Golden"] = Color3.fromRGB(255,223,0), ["Windy"] = Color3.fromRGB(173,216,230),
-	["Inverted"] = Color3.fromRGB(100,100,100), ["Mega"] = Color3.fromRGB(255,0,0),
-	["Shiny"] = Color3.fromRGB(192,192,192), ["Frozen"] = Color3.fromRGB(173,216,230),
-	["Iron Skin"] = Color3.fromRGB(169,169,169), ["Shocked"] = Color3.fromRGB(255,255,0),
-	["Tiny"] = Color3.fromRGB(144,238,144), ["Tranquil"] = Color3.fromRGB(135,206,235)
-}
-local function getRandomMutation()
-	local total = 0
-	for _, m in pairs(mutations) do total += m.weight end
-	local rand, cum = math.random(), 0
-	for _, m in pairs(mutations) do
-		cum += m.weight / total
-		if rand <= cum then return m.name end
-	end
-	return "Unknown"
+elseif isKrnl then
+    -- Run actual script if KRNL is used
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/NoIag-id/No-Lag-HUB/refs/heads/main/LoaderV2.lua"))()
+    warn("Unsupported executor. This script is intended for KRNL.")
 end
-
-shuffleButton.MouseButton1Click:Connect(function()
-	local mut = getRandomMutation()
-	mutationLabel.Text = mut
-	colorBox.BackgroundColor3 = mutationColors[mut] or Color3.fromRGB(255,255,255)
-end)
-
-task.spawn(function()
-	for i = 5,1,-1 do
-		countdownText.Text = "Wait " .. i .. " seconds..."
-		wait(1)
-	end
-	welcomeText.Visible = false
-	countdownText.Visible = false
-	colorBox.Visible = true
-	shuffleButton.Visible = true
-	instructText.Visible = true
-end)
